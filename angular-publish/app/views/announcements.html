@@ -1,0 +1,298 @@
+<div class="container">
+
+
+		<div class="row">
+
+			  <nav>
+					  <ul class="pager">
+					    <li class="previous disabled"><a href="{{'#'+routePath}}"><span aria-hidden="true">&larr;</span> Back </a></li>
+					    <li class="next"><a href="{{'#'+ routePath + '/history'}}">History <span aria-hidden="true">&rarr;</span></a></li>
+					  </ul>
+					</nav>
+			  <div class="col-md-8">
+
+				  <div class="panel panel-info">
+				 	 <div class="panel-heading">
+					 
+						 {{panelType}} Information
+						 <button class="btn btn-primary btn-xs pull-right" ng-click="addAnn()">Add
+								    	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						 </button>
+						
+
+					 </div>
+				 	 <div class="panel-body" >
+				 	 	 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" >{{alert.msg}}</alert>
+				 	 	 <div class="alert alert-warning" role="alert" ng-hide="model">No {{panelType}} Found. Click Add to create!!</div>
+				 	 	 <form name="af" class="form-horizontal" role="form" ng-show="model">
+
+				 	 		
+
+							  <div class="form-group" ng-class="{'has-error': af.title.$invalid && af.title.$dirty , 'has-success': af.title.$valid &&  af.title.$dirty}">
+							    <label for="title" class="col-sm-3 control-label">Title</label>
+							    <div class="col-sm-9">
+							      <input type="text" class="form-control" name="title" placeholder="Title" ng-model="model.title" ng-required="true" >
+							       <p class="help-block" ng-hide="af.title.$error.required">Title is the name to be used for display.</p>
+							      <p class="help-block" ng-show="af.title.$error.required">Title is required.</p>
+							    </div>
+							  </div>
+
+							
+
+							  <div class="form-group"  ng-class="{'has-error': af.content.$invalid && af.content.$dirty , 'has-success': af.content.$valid &&  af.content.$dirty}">
+							    <label for="url" class="col-sm-3 control-label">Body</label>
+							    <div class="col-sm-9">
+
+							        <div text-angular name="content" ng-model="model.text"  required ta-max-text="2000" ></div>
+
+							         <p class="help-block" ng-if="af.content.$error.required">Body is required.</p>
+      							 	 <p class="help-block" ng-if="af.content.$error.taMaxText">Body has more than 2000 characters</p>
+							    </div>
+							  </div>
+
+							    <div class="form-group">
+								    <label for="audience" class="col-sm-3 control-label">Audience</label>
+								    <div class="col-sm-9">
+
+
+								    	  	<p class="help-block" >Audience is optional , but defaults to all firms with any kind of entitlements</p>
+									    	  <ui-select multiple ng-model="model.audience.ruletext1"  theme="select2"  style="width: 300px;">
+											    <ui-select-match placeholder="Select Audience...(OPTIONAL)">{{$item.name}}</ui-select-match>
+											    <ui-select-choices repeat="audience in audience.all | filter:{name:$select.search}">
+											    <div ng-bind-html="audience.name | highlight: $select.search"> </div>
+											     	<small style='font-weight:bold; color:blue'>
+
+												        Description: <span ng-bind-html="''+audience.desc"></span>
+												    </small>
+											    </ui-select-choices>
+											  </ui-select>
+
+											  <p class="help-block">with entitlements,</p>
+
+											  <ui-select multiple ng-model="model.audience.ruletext2"   theme="select2" style="width: 300px;">
+											    <ui-select-match placeholder="Select Entitlement...(OPTIONAL)">{{$item.name}}</ui-select-match>
+											    <ui-select-choices repeat="ent in ents.all | filter:{name: $select.search}">
+											      <div ng-bind-html="ent.name | highlight: $select.search"> </div>
+
+
+											    </ui-select-choices>
+											  </ui-select>
+
+								    </div>
+
+
+
+
+							  </div>
+
+							  <div class="form-group">
+							  	 <label for="audience2" class="col-sm-3 control-label">
+
+						 					   <button class="btn btn-primary btn-xs"  ng-click="reset(model)">Reset
+								    				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+						 					  </button>
+						 		</label>
+							    <div class="col-sm-9">
+							    	 <p class="help-block">
+										 	and whose FIRM CRD numbers are,
+
+										 	 <input type="file" class="form-control" name="orgIds" placeholder="Upload File"  on-read-file="showContent($fileContent)" style="width: 300px;"  />
+
+
+									 </p>
+
+							    </div>
+							  </div>
+
+
+							  <div class="form-group">
+							  	 <label for="audience3" class="col-sm-3 control-label">
+							    			<button class="btn btn-primary btn-xs"  ng-click="refreshOrgList(model)" ng-hide="model.wfl || model.new">Refresh Firm Ids
+								    				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+						 					  </button>
+
+
+						 		</label>
+							    <div class="col-sm-9">
+
+
+
+									  <div ng-if="model.audience.orgIds">
+								        <p class="help-block" >File Contents:</p>
+								        <pre>{{model.audience.orgIds}}</pre>
+								    </div>
+
+							    </div>
+							  </div>
+
+
+
+
+
+
+
+
+							    <div class="form-group">
+							   	      <label for="url" class="col-sm-3 control-label">Activation Date</label>
+									  <div class="col-sm-9">
+										    <div class="dropdown">
+											  <span class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+											    <div class="input-group">
+											    <input type="text" class="form-control"  value="{{model.activation|date :'MM/dd/yyyy HH:mm a'}}" disabled="disabled"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+											    </div>
+											  </span>
+											  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+										       <datetimepicker data-ng-model="model.activation" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" />
+											  </ul>
+										  </div>
+								 	</div>
+							   </div>
+
+							   <div class="form-group">
+							   	      <label for="url" class="col-sm-3 control-label">Expiration Date</label>
+									  <div class="col-sm-9">
+										    <div class="dropdown">
+											  <span class="dropdown-toggle" id="dropdown3" role="button" data-toggle="dropdown" data-target="#" href="#">
+											    <div class="input-group">
+											    <input type="text" class="form-control" value="{{model.expiration|date :'MM/dd/yyyy HH:mm a'}}" disabled="disabled">
+											    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+											    </div>
+											  </span>
+											  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+										       <datetimepicker data-ng-model="model.expiration" data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }"  />
+											  </ul>
+										  </div>
+								 	</div>
+							   </div>
+
+
+
+							   <div class="col-sm-offset-3 col-sm-9">
+							      <div class="checkbox">
+							        <label ng-click="setUrgent()">
+							          <input type="checkbox" ng-checked="model.urgent"  ></input>
+							        </label>
+							         <span style="
+									    position: relative;
+									    top: 2px;
+									">Mark as urgent</span>
+							      </div>
+							     <p class="help-block">If announcement is marked urgent its display format will change.</p>
+							  </div>
+
+
+
+
+							  <button type="submit"  class="btn btn-default"  ng-disabled="af.$invalid"  ng-click="saveDraft()" style="margin-right: 15px;">{{publishDraftStatus}}</button>
+
+							  <button type="submit"  class="btn btn-default"  ng-disabled="af.$invalid"  ng-click="publish()" style="margin-left: 15px;">{{publishStatus}}</button>
+							</form>
+				 	 </div>
+
+				  </div>
+
+
+
+
+			  </div>
+
+			  <div class="col-md-4">
+
+
+
+					        <!--Published panel -->
+						  <div class="panel panel-info" style="width:300px;">
+						 	<div class="panel-heading">Published {{panelType}}</div>
+						 	<div class="panel-body">
+								<ol class="list-unstyled">
+									<li ng-repeat="ann in anns track by $index"  ng-mouseover='mouse=true' ng-mouseout='mouse=false'  >
+									  <!--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ng-show="model.title===ann.title"></span>-->
+									 <div class="row">
+										 <div class="col-sm-8" style="padding-right:1px">
+										   <div ng-class="{selected: isSelected($index)}">
+											 <a ng-href="#" ng-model="ann"
+
+											  ng-class="{strike: ann.deleted, bold: ann.deleted, red: ann.deleted  }"
+
+											  ng-click="selectAnn($index, af.$invalid, $event)">{{ann.title}}</a>
+
+										   </div>
+
+										 </div>
+										<div class="col-sm-4">
+											<i class="glyphicon glyphicon-trash " aria-hidden="true" ng-click="deleteAnn($index, af.$invalid)" ng-show='mouse'></i>
+										</div>
+
+									 </div>
+
+
+
+
+									</li>
+
+								</ol>
+							</div>
+							 <div class="panel-footer">Check in
+							 	<a href="{{fgLink}}" target="_blank"> <span>Firm Gateway
+							 	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></span>
+							 	</a>
+							 </div>
+
+						 </div>
+
+						  <h4></h4>
+						    <!--Draft panel -->
+						  <div class="panel panel-info" style="width:300px;">
+						 	<div class="panel-heading">Draft {{panelType}}</div>
+						 	<div class="panel-body">
+								<ol class="list-unstyled">
+									<li ng-repeat="ann in annsd track by $index"  ng-mouseover='mouse=true' ng-mouseout='mouse=false'  >
+									  <!--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ng-show="model.title===ann.title"></span>-->
+									 <div class="row">
+										 <div class="col-sm-8" style="padding-right:1px">
+										   <div ng-class="{selected: isDraftSelected($index)}">
+											 <a ng-href="#" ng-model="ann"
+
+											  ng-class="{strike: ann.deleted, bold: ann.deleted, red: ann.deleted  }"
+
+											  ng-click="selectDraftAnn($index, af.$invalid, $event)">{{ann.title}}</a>
+
+										   </div>
+
+										 </div>
+										<div class="col-sm-4">
+											<i class="glyphicon glyphicon-trash" aria-hidden="true" ng-click="deleteDraftAnn($index, af.$invalid)" ng-show='mouse'></i>
+										</div>
+
+									 </div>
+
+
+
+
+									</li>
+
+								</ol>
+							</div>
+							 <div class="panel-footer">
+							 </div>
+
+						 </div>
+
+
+			  </div>
+
+
+
+
+			  </div>
+
+
+
+			</div>
+		</div>
+
+</div>
+
+<!--<div id="mydiv">
+       <i class="fa fa-cog fa-spin fa-5x" ></i>
+</div>-->

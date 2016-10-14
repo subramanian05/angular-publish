@@ -1,0 +1,97 @@
+{
+  "navItems": [
+    {
+      "navID": "home",
+      "label": "Home",
+      "url": "app_group_placeholder",
+      "page": "org.finra.desktop.client.controller.DesktopIFrameController",
+      "banner": [
+        {
+          "navID": "education",
+          "label": "Education",
+          "url": "/education",
+          "forceIERefreshIframeUrl": false
+        },
+        {
+          "navID": "resources",
+          "label": "Resources",
+          "url": "/resources",
+          "forceIERefreshIframeUrl": false
+        },
+        {
+          "navID": "announcements",
+          "label": "Announcements",
+          "url": "/announcements",
+          "forceIERefreshIframeUrl": false
+        },
+        {
+          "navID": "interstitials",
+          "label": "Interstitials",
+          "url": "/interstitials",
+          "forceIERefreshIframeUrl": false
+        }
+      ],
+      "forceIERefreshIframeUrl": false
+    },
+    {
+      "navID": "oats",
+      "label": "OATS(PD)",
+      "url": "app_group_placeholder",
+      "page": "org.finra.desktop.client.controller.DesktopIFrameController",
+      "banner": [
+        {
+          "navID": "hotTopics",
+          "label": "Hot Topics",
+          "url": "/oats/hotTopics/pd",
+          "forceIERefreshIframeUrl": false
+        },
+        {
+          "navID": "sysAnnouncements",
+          "label": "System Announcements",
+          "url": "/oats/systemAnnouncements/pd",
+          "forceIERefreshIframeUrl": false
+        },
+        {
+          "navID": "oatsResources",
+          "label": "OATS Resources",
+          "url": "/oats/resources/pd",
+          "forceIERefreshIframeUrl": false
+        }
+      ],
+      "forceIERefreshIframeUrl": false
+    },
+    {
+      "navID": "oats",
+      "label": "OATS(CT)",
+      "url": "app_group_placeholder",
+      "page": "org.finra.desktop.client.controller.DesktopIFrameController",
+      "banner": [
+        {
+          "navID": "hotTopics",
+          "label": "Hot Topics",
+          "url": "/oats/hotTopics/ct",
+          "forceIERefreshIframeUrl": false
+        },
+        {
+          "navID": "sysAnnouncements",
+          "label": "System Announcements",
+          "url": "/oats/systemAnnouncements/ct",
+          "forceIERefreshIframeUrl": false
+        },
+        {
+          "navID": "oatsResources",
+          "label": "OATS Resources",
+          "url": "/oats/resources/ct",
+          "forceIERefreshIframeUrl": false
+        }
+      ],
+      "forceIERefreshIframeUrl": false
+    }
+  ],
+  "status": "ok",
+  "user": {
+    "userId": "MuthIahj",
+    "firstName": "Jeyanthi",
+    "lastName": "Muthiah"
+  }
+}

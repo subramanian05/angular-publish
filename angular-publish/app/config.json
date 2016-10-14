@@ -1,0 +1,45 @@
+{
+	
+	"Home": [
+
+		{
+			"name":"Education",
+			 "url":"/education"
+
+		},
+		{
+			"name":"Resources",
+			 "url":"/resources"
+	
+		},
+		{
+			"name":"Announcements",
+			 "url":"/announcements"
+			
+		}
+		
+
+	],
+	"Oats":[
+
+		{
+			 "name":"Hot Topics",			 
+			 "url":"/oats/hotTopics"
+	
+		},
+		{
+			"name":"System Announcements",
+			 "url":"/oats/systemAnnouncements"
+	
+		},
+		{
+			"name":"OATS Resources",
+			 "url":"/oats/resources"
+		
+		}
+		
+
+	]
+
+	
+}
